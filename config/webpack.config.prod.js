@@ -11,7 +11,9 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-
+function resolve (dir) {
+  return path.join(__dirname , `../${dir}`)
+}
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -89,7 +91,12 @@ module.exports = {
     // for React Native Web.
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
-      
+      'static': resolve('src/static'),
+      'components': resolve('src/components'),
+      'containers': resolve('src/containers'),
+      'api': resolve('src/api'),
+      'reduxs': resolve('src/redux'),
+      'util': resolve('src/util'),
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
