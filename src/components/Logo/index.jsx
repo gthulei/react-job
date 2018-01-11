@@ -6,8 +6,8 @@ import './index.css'
 class Logo extends Component {
   render() {
     return (
-     <section className={'logo'}>
-       <img src={logo} alt="logo" className={'logo'}/>
+     <section className={'logo-wrap'}>
+       <img src={logo} alt="logo" className={'logo-img'}/>
      </section>
     );
   }
