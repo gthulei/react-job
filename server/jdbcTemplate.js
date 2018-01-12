@@ -1,3 +1,5 @@
+const _filter = require('./config/filter')
+
 class JdbcTemplate {
 
   promise(callback) {
@@ -42,7 +44,7 @@ class JdbcTemplate {
 
   select(model, ...parameter) {
     return this.promise((resolve, reject) => {
-      model.findOne(...parameter,(error,doc)=>{
+      model.findOne(...parameter,_filter,(error,doc)=>{
         if(error){
           reject(error);
         }else {
