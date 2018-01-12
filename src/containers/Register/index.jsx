@@ -12,7 +12,7 @@ class Register extends Component {
     super(props);
     this.state = {
       username:'',
-      pass:'',
+      password:'',
       confirmPass:'',
       type:'genius',
       msg:''
@@ -34,12 +34,12 @@ class Register extends Component {
         msg: '请输入帐号'
       });
       return;
-    }else if(this.state.pass == ''){
+    }else if(this.state.password == ''){
       this.setState({
         msg: '请输入密码'
       });
       return;
-    }else if(this.state.confirmPass !== this.state.pass){
+    }else if(this.state.confirmPass !== this.state.password){
       this.setState({
         msg: '2次密码不一致'
       });
@@ -73,7 +73,7 @@ class Register extends Component {
           <InputItem
             type="password"
             placeholder="请输入密码"
-            onChange={v => this.onChangeInput('pass',v)}
+            onChange={v => this.onChangeInput('password',v)}
           >密码
           </InputItem>
           <WhiteSpace/>

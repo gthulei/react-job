@@ -17,7 +17,7 @@ class GeniusInfo extends Component {
         <TextareaItem
           title="职位要求"
           placeholder="职位要求"
-          onChange={v => this.onChangeInput('requirements',v)}
+          onChange={v => this.onChangeInput('decs',v)}
           autoHeight
         />
       </List>

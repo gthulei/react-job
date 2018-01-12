@@ -10,7 +10,7 @@ class Login extends Component {
     super(props);
     this.state = {
       username:'',
-      pass:'',
+      password:'',
       msg:''
     }
     this.onChangeInput = this.onChangeInput.bind(this);
@@ -30,7 +30,7 @@ class Login extends Component {
         msg: '请输入帐号'
       });
       return;
-    }else if(this.state.pass == ''){
+    }else if(this.state.password == ''){
       this.setState({
         msg: '请输入密码'
       });
@@ -66,7 +66,7 @@ class Login extends Component {
           <InputItem
             type="password"
             placeholder="请输入密码"
-            onChange={v => this.onChangeInput('pass',v)}
+            onChange={v => this.onChangeInput('password',v)}
             maxLength={16}
           >密码
           </InputItem>
