@@ -1,7 +1,7 @@
 import * as actionTypes from '../actionType'
 import axios from 'axios'
 import {Toast} from 'antd-mobile';
-import {LOGIN, REGISTER} from 'api/user.api'
+import {LOGIN, REGISTER , USERINFO} from 'api/user.api'
 
 function userAxios(dispatch, url, data) {
   axios.post(url, data)
@@ -25,6 +25,13 @@ export function loginAction(data) {
 export function registerAction(data) {
   return (dispatch) => {
     userAxios(dispatch, REGISTER, data);
+  }
+
+}
+
+export function userInfoAction(data) {
+  return (dispatch) => {
+    userAxios(dispatch, USERINFO, data);
   }
 
 }

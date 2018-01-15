@@ -30,7 +30,7 @@ module.exports = {
           JDBC.insert(DB.userModel, req.body)
             .then(user => {
               req.session.user = user;
-              res.json(RES.response('注册成功', '0000000', true, {_id:user._id,type:user.type}));
+              res.json(RES.response('注册成功', '0000000', true, {_id: user._id, type: user.type}));
             }).catch(_err => {
             res.json(RES.responseErrorData('服务器异常', '0000500'));
             E.err(_err);
@@ -40,5 +40,12 @@ module.exports = {
       res.json(RES.responseErrorData('服务器异常', '0000500'));
       E.err(_err);
     });
+  },
+  userInfo(req, res) {
+    if(req.session.user){
+      res.json(RES.response('查询成功', '0000000', true, req.session.user));
+    }else {
+      res.json(RES.responseErrorData('查询失败','000010'));
+    }
   }
 }

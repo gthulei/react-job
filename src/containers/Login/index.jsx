@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
 import {WingBlank, WhiteSpace, InputItem, Button} from 'antd-mobile';
 import {withRouter} from 'react-router-dom'
+import { connect } from 'react-redux';
 
 import Logo from "components/Logo";
+import { loginAction } from 'reduxs/action'
 
 @withRouter
+@connect(
+  state=>state.userinfo,
+  {loginAction}
+)
 class Login extends Component {
   constructor(props){
     super(props);
@@ -40,7 +46,7 @@ class Login extends Component {
       msg: ''
     });
    const {msg,...parameter} = this.state;
-    console.log(parameter);
+   this.props.loginAction(parameter);
   }
 
   onGoback(){
