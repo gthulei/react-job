@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {WingBlank, WhiteSpace, InputItem, Button , Radio} from 'antd-mobile';
 import {withRouter} from 'react-router-dom'
+import axios from 'axios'
 
 import Logo from "components/Logo";
 
@@ -22,6 +23,7 @@ class Register extends Component {
     this.onGoback = this.onGoback.bind(this);
 
   }
+
   onChangeInput(key,val){
     this.setState({
       [key]: val
@@ -49,7 +51,10 @@ class Register extends Component {
       msg: ''
     });
     const {msg,confirmPass,...parameter} = this.state;
-    console.log(parameter);
+    axios.post('/user/login',parameter)
+      .then((_res) => {
+        console.log(_res);
+      })
   }
 
   onGoback(){

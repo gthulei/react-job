@@ -4,5 +4,6 @@ import ReactDOM from 'react-dom';
 import Router from './router'
 import registerServiceWorker from './registerServiceWorker';
 import 'static/css/reset'
+import 'util/axios'
 ReactDOM.render(<Router />, document.getElementById('root'));
 registerServiceWorker();
