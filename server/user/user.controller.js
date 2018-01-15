@@ -1,36 +1,43 @@
-const db = require('../model/model');
-const Jdbc = require('../jdbcTemplate');
-
+const DB = require('../model/model');
+const JDBC = require('../util/jdbcTemplate');
+const RES = require('../util/ServerResponse')
+const E = require('../util/Exception');
+const MD5 = require('md5');
 
 module.exports = {
   login(req, res) {
-    Jdbc.select(db.userModel, req.body)
+    JDBC.select(DB.userModel, req.body)
       .then((_res) => {
         if (_res) {
-          res.json({
-            errorCode: "0000000",
-            errorMessage: "登录成功",
-            succeed: true,
-            data: _res
-          })
+          req.session.user = _res;
+          res.json(RES.response('登录成功', '0000000', true, _res));
         } else {
-          res.json({
-            errorCode: "000010",
-            errorMessage: "帐号或密码错误",
-            succeed: false,
-            data: null
-          })
+          res.json(RES.responseErrorData('帐号或密码错误', '000010'));
         }
-      }).catch(() => {
-      res.json({
-        errorCode: "0000500",
-        errorMessage: "数据库异常",
-        succeed: false,
-        data: null
-      })
-    })
+      }).catch(_err => {
+      res.json(RES.responseErrorData('服务器异常', '0000500'));
+      E.err(_err);
+    });
   },
   register(req, res) {
-
+    JDBC.select(DB.userModel, {username: req.body.username})
+      .then(_res => {
+        if (_res) {
+          res.json(RES.responseErrorData('用户名已存在', '000010'));
+        } else {
+          req.body.password = MD5(req.body.password);
+          JDBC.insert(DB.userModel, req.body)
+            .then(user => {
+              req.session.user = user;
+              res.json(RES.response('注册成功', '0000000', true, user._id));
+            }).catch(_err => {
+            res.json(RES.responseErrorData('服务器异常', '0000500'));
+            E.err(_err);
+          });
+        }
+      }).catch(_err => {
+      res.json(RES.responseErrorData('服务器异常', '0000500'));
+      E.err(_err);
+    });
   }
 }

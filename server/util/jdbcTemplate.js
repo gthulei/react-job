@@ -1,4 +1,4 @@
-const _filter = require('./config/filter')
+const _filter = require('../config/filter')
 
 class JdbcTemplate {
 
@@ -8,10 +8,10 @@ class JdbcTemplate {
 
   insert(model, ...parameter) {
     return this.promise((resolve, reject) => {
-      model.create(...parameter,(error,doc)=>{
-        if(error){
+      model.create(...parameter, (error, doc) => {
+        if (error) {
           reject(error);
-        }else {
+        } else {
           resolve(doc);
         }
       })
@@ -20,10 +20,10 @@ class JdbcTemplate {
 
   delete(model, ...parameter) {
     return this.promise((resolve, reject) => {
-      model.remove(...parameter,(error,doc)=>{
-        if(error){
+      model.remove(...parameter, (error, doc) => {
+        if (error) {
           reject(error);
-        }else {
+        } else {
           resolve(doc);
         }
       })
@@ -32,10 +32,10 @@ class JdbcTemplate {
 
   update(model, ...parameter) {
     return this.promise((resolve, reject) => {
-      model.update(...parameter,(error,doc)=>{
-        if(error){
+      model.update(...parameter, (error, doc) => {
+        if (error) {
           reject(error);
-        }else {
+        } else {
           resolve(doc);
         }
       })
@@ -44,10 +44,10 @@ class JdbcTemplate {
 
   select(model, ...parameter) {
     return this.promise((resolve, reject) => {
-      model.findOne(...parameter,_filter,(error,doc)=>{
-        if(error){
+      model.findOne(...parameter, _filter, (error, doc) => {
+        if (error) {
           reject(error);
-        }else {
+        } else {
           resolve(doc);
         }
       })
