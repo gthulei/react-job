@@ -6,6 +6,7 @@ const MD5 = require('md5');
 
 module.exports = {
   login(req, res) {
+    req.body.password = MD5(req.body.password);
     JDBC.select(DB.userModel, req.body)
       .then((_res) => {
         if (_res) {
@@ -29,7 +30,7 @@ module.exports = {
           JDBC.insert(DB.userModel, req.body)
             .then(user => {
               req.session.user = user;
-              res.json(RES.response('注册成功', '0000000', true, user._id));
+              res.json(RES.response('注册成功', '0000000', true, {_id:user._id,type:user.type}));
             }).catch(_err => {
             res.json(RES.responseErrorData('服务器异常', '0000500'));
             E.err(_err);

@@ -11,6 +11,7 @@ axios.interceptors.request.use(function(config){
 
 //添加一个响应拦截器
 axios.interceptors.response.use(function(res){
+  Toast.hide();
   return res.data;
 },function(err){
   return Promise.reject(err);
