@@ -11,12 +11,12 @@ const Router = () => {
   return (
     <BrowserRouter>
       <div>
-        <AuthRouter/>
         <Switch>
           <Route path='/login' component={Login}></Route>
           <Route path='/register' component={Register}></Route>
-          <Route path='/userInfo' component={UserInfo}></Route>
-          <Route path='/home' component={Home}></Route>
+          <Route path='/userInfo/:id' component={UserInfo}></Route>
+          <Route path='/home/:id' component={Home}></Route>
+          <Route component={Login}></Route>
         </Switch>
       </div>
     </BrowserRouter>

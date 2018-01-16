@@ -56,7 +56,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        {this.props.userid ? <Redirect to={'/userInfo'}></Redirect>:''}
+        {this.props.userid ? <Redirect to={`/userInfo/${this.props.userid}`}></Redirect>:''}
         <Logo></Logo>
         <WingBlank>
           <h1 className={'f18'}>用户登录</h1>

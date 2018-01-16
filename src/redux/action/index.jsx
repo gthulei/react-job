@@ -36,3 +36,12 @@ export function userInfoAction(data) {
   }
 
 }
+
+
+export function workInfoAction(data) {
+  return {
+    type: actionTypes.WORK_INFI,
+    data,
+  }
+
+}

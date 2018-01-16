@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {NavBar, WhiteSpace, Button , Toast} from 'antd-mobile';
-import {withRouter, Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios'
 
@@ -8,10 +8,12 @@ import {FINDINFOMATION, SAVEINFOMATION} from 'api/user.api'
 import Avatar from "components/Avatar";
 import GeniusInfo from "../../components/GeniusInfo";
 import BoosInfo from "../../components/BoosInfo";
+import { workInfoAction } from 'reduxs/action'
 
 @withRouter
 @connect(
-  state => state.userinfo
+  state => state.userinfo,
+  {workInfoAction}
 )
 class UserInfo extends Component {
   constructor(props) {
@@ -28,12 +30,13 @@ class UserInfo extends Component {
   }
 
   componentWillMount() {
-    axios.post(FINDINFOMATION, {userid: this.props.userid})
+    axios.post(FINDINFOMATION, {userid: this.props.match.params.id})
       .then(_res => {
         if (_res.succeed) {
           const {update_time,create_time,...result} = _res.data;
           this.setState(result);
-          this.props.history.push('/home');
+          this.props.workInfoAction(result);
+          this.props.history.push(`/home/${this.props.match.params.id}`);
         }
       })
   }
@@ -45,14 +48,15 @@ class UserInfo extends Component {
   }
 
   submit() {
-    let parameter = Object.assign({}, this.state, {userid: this.props.userid});
+    let parameter = Object.assign({}, this.state, {userid: this.props.match.params.id});
     delete parameter._id;
     axios.post(SAVEINFOMATION,parameter)
       .then(_res => {
         if(_res.succeed){
           Toast.success(_res.errorMessage, 1);
           this.setState(_res.data);
-          this.props.history.push('/home');
+          this.props.workInfoAction(parameter);
+          this.props.history.push(`/home/${this.props.match.params.id}`);
         }else {
           Toast.fail(_res.errorMessage, 1);
         }
