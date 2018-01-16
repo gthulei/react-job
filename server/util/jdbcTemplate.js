@@ -30,9 +30,9 @@ class JdbcTemplate {
     })
   }
 
-  update(model, ...parameter) {
+  update(model, parameterV1, ...parameterV2) {
     return this.promise((resolve, reject) => {
-      model.update(...parameter, (error, doc) => {
+      model.update(parameterV1, {$set: parameterV2[0]}, (error, doc) => {
         if (error) {
           reject(error);
         } else {

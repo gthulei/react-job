@@ -1,14 +1,14 @@
 import * as actionTypes from '../actionType'
 import axios from 'axios'
 import {Toast} from 'antd-mobile';
-import {LOGIN, REGISTER , USERINFO} from 'api/user.api'
+import {LOGIN, REGISTER } from 'api/user.api'
 
 function userAxios(dispatch, url, data) {
   axios.post(url, data)
     .then(_res => {
       if (_res.succeed) {
         Toast.success(_res.errorMessage, 1);
-        dispatch({type: actionTypes.AUTO_LOGIN, data: {userId: _res.data._id, type: _res.data.type}});
+        dispatch({type: actionTypes.AUTO_LOGIN, data: {userid: _res.data._id, type: _res.data.type}});
       } else {
         Toast.fail(_res.errorMessage, 1);
       }
@@ -30,8 +30,9 @@ export function registerAction(data) {
 }
 
 export function userInfoAction(data) {
-  return (dispatch) => {
-    userAxios(dispatch, USERINFO, data);
+  return {
+    type: actionTypes.AUTO_LOGIN,
+    data,
   }
 
 }

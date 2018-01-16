@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom'
+import {withRouter , Redirect} from 'react-router-dom'
 import { connect } from 'react-redux';
+import axios from 'axios'
+
+import {USERINFO} from 'api/user.api'
 import {userInfoAction} from 'reduxs/action'
 
 @withRouter
@@ -14,16 +17,24 @@ class AuthRouter extends Component {
 
   }
   componentWillMount() {
-    console.log(this.props);
     const url = ['/login','/register'];
     const {pathname} = this.props.location;
     if(url.indexOf(pathname)>-1)return;
-    this.props.userInfoAction();
+    axios.post(USERINFO)
+      .then(_res => {
+        if (_res.succeed) {
+          this.props.userInfoAction({userid: _res.data._id, type: _res.data.type});
+          this.props.history.push('/home');
+        }else {
+          this.props.history.push('/login');
+        }
+      })
   }
 
   render() {
     return (
-      <div></div>
+      <div>
+      </div>
     );
   }
 }

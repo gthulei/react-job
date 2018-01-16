@@ -1,34 +1,71 @@
 import React, {Component} from 'react';
-import {NavBar, WhiteSpace , Button} from 'antd-mobile';
+import {NavBar, WhiteSpace, Button , Toast} from 'antd-mobile';
+import {withRouter, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import axios from 'axios'
 
+import {FINDINFOMATION, SAVEINFOMATION} from 'api/user.api'
 import Avatar from "components/Avatar";
 import GeniusInfo from "../../components/GeniusInfo";
 import BoosInfo from "../../components/BoosInfo";
 
+@withRouter
+@connect(
+  state => state.userinfo
+)
 class UserInfo extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      position:'',
+      company:'',
+      salary:'',
+      decs:'',
+      avatar:''
+    }
     this.submit = this.submit.bind(this);
     this.onChangeInput = this.onChangeInput.bind(this);
   }
 
-  onChangeInput(key,val){
+  componentWillMount() {
+    axios.post(FINDINFOMATION, {userid: this.props.userid})
+      .then(_res => {
+        if (_res.succeed) {
+          const {update_time,create_time,...result} = _res.data;
+          this.setState(result);
+          this.props.history.push('/home');
+        }
+      })
+  }
+
+  onChangeInput(key, val) {
     this.setState({
-      [key]:val
+      [key]: val
     })
   }
 
-  submit(){
-    console.log(this.state);
+  submit() {
+    let parameter = Object.assign({}, this.state, {userid: this.props.userid});
+    delete parameter._id;
+    axios.post(SAVEINFOMATION,parameter)
+      .then(_res => {
+        if(_res.succeed){
+          Toast.success(_res.errorMessage, 1);
+          this.setState(_res.data);
+          this.props.history.push('/home');
+        }else {
+          Toast.fail(_res.errorMessage, 1);
+        }
+      })
   }
 
   render() {
     return (
       <div>
-        <NavBar mode='dark'>{this.props.routerTo == 'genius' ? '牛人完善资料页' : 'boos完善资料页'}</NavBar>
-        <Avatar></Avatar>
+        <NavBar mode='dark'>{this.props.type == 'boos' ? 'boos完善资料页' : '牛人完善资料页'}</NavBar>
+        <Avatar onChangeInput={this.onChangeInput} avatar = {this.state.avatar}></Avatar>
         <WhiteSpace></WhiteSpace>
-        {this.props.routerTo == 'genius' ? <GeniusInfo onChangeInput={this.onChangeInput}/> : <BoosInfo onChangeInput={this.onChangeInput}/>}
+        {this.props.type == 'boos' ? <BoosInfo onChangeInput={this.onChangeInput} {...this.state}/> : <GeniusInfo onChangeInput={this.onChangeInput} {...this.state}/>}
         <WhiteSpace></WhiteSpace>
         <Button type="primary" onClick={this.submit}>保存</Button>
       </div>

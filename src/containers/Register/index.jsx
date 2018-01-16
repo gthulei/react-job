@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {WingBlank, WhiteSpace, InputItem, Button, Radio} from 'antd-mobile';
-import {withRouter} from 'react-router-dom';
+import {withRouter ,Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import Logo from "components/Logo";
@@ -66,6 +66,7 @@ class Register extends Component {
   render() {
     return (
       <div>
+        {this.props.userid ? <Redirect to={'/userInfo'}></Redirect>:''}
         <Logo></Logo>
         <WingBlank>
           <h1 className={'f18'}>用户注册</h1>

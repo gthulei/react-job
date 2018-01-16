@@ -11,14 +11,13 @@ app.use(expressSession({
   secret: 'keyboard cat',
   resave: true,
   rolling: true,
-  resave: true,
   saveUninitialized: true,
   cookie: {maxAge: 1000 * 60 * 30}
 }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-app.use('/user',require('./user'))
+app.use('/user', require('./user'))
 
 app.listen(8080, () => {
     console.log('listem on 8080 o(*￣︶￣*)o');

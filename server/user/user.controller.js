@@ -42,10 +42,53 @@ module.exports = {
     });
   },
   userInfo(req, res) {
-    if(req.session.user){
+    if (req.session.user) {
       res.json(RES.response('查询成功', '0000000', true, req.session.user));
-    }else {
-      res.json(RES.responseErrorData('查询失败','000010'));
+    } else {
+      res.json(RES.responseErrorData('查询失败', '000010'));
     }
+  },
+  seveInforMation(req, res) {
+    JDBC.select(DB.userInfoModel, {userid: req.body.userid})
+      .then(userRes => {
+        if (userRes) {
+          JDBC.update(DB.userInfoModel,{userid: req.body.userid},req.body)
+            .then(_res => {
+              if (_res) {
+                res.json(RES.responseSucceesData(_res));
+              } else {
+                res.json(RES.responseError());
+              }
+            })
+        } else {
+          JDBC.insert(DB.userInfoModel, req.body)
+            .then(_res => {
+              if (_res) {
+                res.json(RES.responseSuccees());
+              } else {
+                res.json(RES.responseError());
+              }
+            }).catch(_err => {
+            res.json(RES.responseErrorData('服务器异常', '0000500'));
+            E.err(_err);
+          });
+        }
+      }).catch(_err => {
+      res.json(RES.responseErrorData('服务器异常', '0000500'));
+      E.err(_err);
+    });
+  },
+  findInforMation(req, res) {
+    JDBC.select(DB.userInfoModel, {userid: req.body.userid})
+      .then(_res => {
+        if (_res) {
+          res.json(RES.responseSucceesData(_res));
+        } else {
+          res.json(RES.responseError());
+        }
+      }).catch(_err => {
+      res.json(RES.responseErrorData('服务器异常', '0000500'));
+      E.err(_err);
+    });
   }
 }

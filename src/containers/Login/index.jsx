@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {WingBlank, WhiteSpace, InputItem, Button} from 'antd-mobile';
-import {withRouter} from 'react-router-dom'
+import {withRouter , Redirect} from 'react-router-dom'
 import { connect } from 'react-redux';
 
 import Logo from "components/Logo";
@@ -56,6 +56,7 @@ class Login extends Component {
   render() {
     return (
       <div>
+        {this.props.userid ? <Redirect to={'/userInfo'}></Redirect>:''}
         <Logo></Logo>
         <WingBlank>
           <h1 className={'f18'}>用户登录</h1>

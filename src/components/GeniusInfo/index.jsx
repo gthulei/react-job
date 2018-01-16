@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { List, InputItem } from 'antd-mobile';
+import { List, InputItem , TextareaItem} from 'antd-mobile';
 
 class GeniusInfo extends Component {
   constructor(props) {
@@ -12,15 +12,16 @@ class GeniusInfo extends Component {
   }
   render() {
     return (
-      <List>
-        <InputItem placeholder="求职职位" onChange={v => this.onChangeInput('position',v)}>招聘职位</InputItem>
-        <TextareaItem
-          title="职位要求"
-          placeholder="职位要求"
-          onChange={v => this.onChangeInput('decs',v)}
-          autoHeight
-        />
-      </List>
+        <List>
+          <InputItem placeholder="求职职位" onChange={v => this.onChangeInput('position',v)} value={this.props.position}>招聘职位</InputItem>
+          <TextareaItem
+            title="职位要求"
+            placeholder="职位要求"
+            onChange={v => this.onChangeInput('decs',v)}
+            value={this.props.decs}
+            autoHeight
+          />
+        </List>
     );
   }
 }

@@ -12,7 +12,8 @@ const user = new mongoose.Schema({
 const userInfo = new mongoose.Schema({
   userid: {type: String, required: true},
   position: {type: String, required: true},
-  company: {type: String, default: '', required: true},
+  avatar: {type: String},
+  company: {type: String},
   salary: {type: String},
   decs: {type: String, required: true},
   create_time: {type: Date, default: Date.now},
