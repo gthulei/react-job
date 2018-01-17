@@ -66,7 +66,7 @@ class Register extends Component {
   render() {
     return (
       <div>
-        {this.props.userid ? <Redirect to={`/userInfo/${this.props.userid}`}></Redirect>:''}
+        {this.props._id ? <Redirect to={this.props.routerTo}></Redirect>:''}
         <Logo></Logo>
         <WingBlank>
           <h1 className={'f18'}>用户注册</h1>

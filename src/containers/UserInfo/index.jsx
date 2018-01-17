@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
-import {NavBar, WhiteSpace, Button , Toast} from 'antd-mobile';
-import {withRouter} from 'react-router-dom';
+import {NavBar, WhiteSpace, Button } from 'antd-mobile';
+import {withRouter , Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import axios from 'axios'
 
 import {FINDINFOMATION, SAVEINFOMATION} from 'api/user.api'
 import Avatar from "components/Avatar";
 import GeniusInfo from "../../components/GeniusInfo";
 import BoosInfo from "../../components/BoosInfo";
-import { workInfoAction } from 'reduxs/action'
+import {workAction} from 'reduxs/action'
 
 @withRouter
 @connect(
-  state => state.userinfo,
-  {workInfoAction}
+  state => ({userinfo:state.userinfo, workinfo: state.workinfo}),
+  {workAction}
 )
 class UserInfo extends Component {
   constructor(props) {
@@ -28,17 +27,16 @@ class UserInfo extends Component {
     this.submit = this.submit.bind(this);
     this.onChangeInput = this.onChangeInput.bind(this);
   }
-
   componentWillMount() {
-    axios.post(FINDINFOMATION, {userid: this.props.match.params.id})
-      .then(_res => {
-        if (_res.succeed) {
-          const {update_time,create_time,...result} = _res.data;
-          this.setState(result);
-          this.props.workInfoAction(result);
-          this.props.history.push(`/home/${this.props.match.params.id}`);
-        }
-      })
+    const {position,company,salary,decs,avatar} = this.props.userinfo;
+    this.setState({
+      position: position,
+      company: company,
+      salary: salary,
+      decs: decs,
+      avatar:avatar
+    })
+
   }
 
   onChangeInput(key, val) {
@@ -48,28 +46,18 @@ class UserInfo extends Component {
   }
 
   submit() {
-    let parameter = Object.assign({}, this.state, {userid: this.props.match.params.id});
-    delete parameter._id;
-    axios.post(SAVEINFOMATION,parameter)
-      .then(_res => {
-        if(_res.succeed){
-          Toast.success(_res.errorMessage, 1);
-          this.setState(_res.data);
-          this.props.workInfoAction(parameter);
-          this.props.history.push(`/home/${this.props.match.params.id}`);
-        }else {
-          Toast.fail(_res.errorMessage, 1);
-        }
-      })
+    let params = {...this.state,userid:this.props.userinfo._id};
+    this.props.workAction(params);
   }
 
   render() {
     return (
       <div>
-        <NavBar mode='dark'>{this.props.type == 'boos' ? 'boos完善资料页' : '牛人完善资料页'}</NavBar>
+        {this.props.workinfo.avatar ? <Redirect to={this.props.workinfo.routerTo}></Redirect>:''}
+        <NavBar mode='dark'>{this.props.userinfo.type == 'boos' ? 'boos完善资料页' : '牛人完善资料页'}</NavBar>
         <Avatar onChangeInput={this.onChangeInput} avatar = {this.state.avatar}></Avatar>
         <WhiteSpace></WhiteSpace>
-        {this.props.type == 'boos' ? <BoosInfo onChangeInput={this.onChangeInput} {...this.state}/> : <GeniusInfo onChangeInput={this.onChangeInput} {...this.state}/>}
+        {this.props.userinfo.type == 'boos' ? <BoosInfo onChangeInput={this.onChangeInput} {...this.state}/> : <GeniusInfo onChangeInput={this.onChangeInput} {...this.state}/>}
         <WhiteSpace></WhiteSpace>
         <Button type="primary" onClick={this.submit}>保存</Button>
       </div>

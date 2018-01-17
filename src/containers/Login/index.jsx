@@ -1,71 +1,71 @@
 import React, {Component} from 'react';
 import {WingBlank, WhiteSpace, InputItem, Button} from 'antd-mobile';
-import {withRouter , Redirect} from 'react-router-dom'
-import { connect } from 'react-redux';
+import {withRouter, Redirect} from 'react-router-dom'
+import {connect} from 'react-redux';
 
 import Logo from "components/Logo";
-import { loginAction } from 'reduxs/action'
+import {loginAction} from 'reduxs/action'
 
 @withRouter
 @connect(
-  state=>state.userinfo,
+  state => state.userinfo,
   {loginAction}
 )
 class Login extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      username:'',
-      password:'',
-      msg:''
+      username: '',
+      password: '',
+      msg: ''
     }
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onGoback = this.onGoback.bind(this);
   }
 
-  onChangeInput(key,val){
+  onChangeInput(key, val) {
     this.setState({
       [key]: val,
     });
   }
 
-  onSubmit(){
-    if(this.state.username == ''){
+  onSubmit() {
+    if (this.state.username == '') {
       this.setState({
         msg: '请输入帐号'
       });
       return;
-    }else if(this.state.password == ''){
+    } else if (this.state.password == '') {
       this.setState({
         msg: '请输入密码'
       });
-     return;
+      return;
     }
     this.setState({
       msg: ''
     });
-   const {msg,...parameter} = this.state;
-   this.props.loginAction(parameter);
+    const {msg, ...parameter} = this.state;
+    this.props.loginAction(parameter);
   }
 
-  onGoback(){
+  onGoback() {
     this.props.history.push('/register');
   }
 
   render() {
     return (
       <div>
-        {this.props.userid ? <Redirect to={`/userInfo/${this.props.userid}`}></Redirect>:''}
+        {this.props._id ? <Redirect to={this.props.routerTo}></Redirect>:''}
         <Logo></Logo>
         <WingBlank>
           <h1 className={'f18'}>用户登录</h1>
           <WhiteSpace/>
-          {this.state.msg?<div className={'error f14'}>{this.state.msg}</div>:''}
+          {this.state.msg ? <div className={'error f14'}>{this.state.msg}</div> : ''}
           <InputItem
             type="type"
             placeholder="请输入帐号"
-            onChange={v => this.onChangeInput('username',v)}
+            onChange={v => this.onChangeInput('username', v)}
             maxLength={11}
           >帐号
           </InputItem>
@@ -73,7 +73,7 @@ class Login extends Component {
           <InputItem
             type="password"
             placeholder="请输入密码"
-            onChange={v => this.onChangeInput('password',v)}
+            onChange={v => this.onChangeInput('password', v)}
             maxLength={16}
           >密码
           </InputItem>

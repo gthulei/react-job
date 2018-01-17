@@ -43,7 +43,8 @@ module.exports = {
   },
   userInfo(req, res) {
     if (req.session.user) {
-      res.json(RES.response('查询成功', '0000000', true, req.session.user));
+      let {username,type,_id} = req.session.user;
+      res.json(RES.response('查询成功', '0000000', true, {username,type,_id}));
     } else {
       res.json(RES.responseErrorData('查询失败', '000010'));
     }
@@ -55,7 +56,7 @@ module.exports = {
           JDBC.update(DB.userInfoModel,{userid: req.body.userid},req.body)
             .then(_res => {
               if (_res) {
-                res.json(RES.responseSucceesData(_res));
+                res.json(RES.responseSucceesData(req.body));
               } else {
                 res.json(RES.responseError());
               }
