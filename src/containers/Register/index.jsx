@@ -94,7 +94,7 @@ class Register extends Component {
           </InputItem>
           <WhiteSpace/>
           <RadioItem checked={this.state.type == 'genius'} onChange={() => this.onChangeInput('type', 'genius')}>牛人</RadioItem>
-          <RadioItem checked={this.state.type == 'boos'} onChange={() => this.onChangeInput('type', 'boos')}>BOOS</RadioItem>
+          <RadioItem checked={this.state.type == 'boss'} onChange={() => this.onChangeInput('type', 'boss')}>BOSS</RadioItem>
           <WhiteSpace/>
           <Button type="primary" onClick={this.onSubmit}>注册</Button>
           <WhiteSpace/>

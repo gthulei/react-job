@@ -30,7 +30,7 @@ module.exports = {
           JDBC.insert(DB.userModel, req.body)
             .then(user => {
               req.session.user = user;
-              res.json(RES.response('注册成功', '0000000', true, {_id: user._id, type: user.type,username:user.username}));
+              res.json(RES.response('注册成功', '0000000', true, {_id: user._id, type: user.type, username: user.username}));
             }).catch(_err => {
             res.json(RES.responseErrorData('服务器异常', '0000500'));
             E.err(_err);
@@ -43,13 +43,14 @@ module.exports = {
   },
   userInfo(req, res) {
     if (req.session.user) {
-      let {username,type,_id} = req.session.user;
-      res.json(RES.response('查询成功', '0000000', true, {username,type,_id}));
+      let {username, type, _id} = req.session.user;
+      console.log(username)
+      res.json(RES.response('查询成功', '0000000', true, {username, type, _id}));
     } else {
       res.json(RES.responseErrorData('查询失败', '000010'));
     }
   },
-  escLogin(req, res){
+  escLogin(req, res) {
     req.session = null;
     res.json(RES.responseSuccees());
   },
@@ -57,7 +58,7 @@ module.exports = {
     JDBC.select(DB.userInfoModel, {userid: req.body.userid})
       .then(userRes => {
         if (userRes) {
-          JDBC.update(DB.userInfoModel,{userid: req.body.userid},req.body)
+          JDBC.update(DB.userInfoModel, {userid: req.body.userid}, req.body)
             .then(_res => {
               if (_res) {
                 res.json(RES.responseSucceesData(req.body));
@@ -85,6 +86,19 @@ module.exports = {
   },
   findInforMation(req, res) {
     JDBC.select(DB.userInfoModel, {userid: req.body.userid})
+      .then(_res => {
+        if (_res) {
+          res.json(RES.responseSucceesData(_res));
+        } else {
+          res.json(RES.responseError());
+        }
+      }).catch(_err => {
+      res.json(RES.responseErrorData('服务器异常', '0000500'));
+      E.err(_err);
+    });
+  },
+  findUserList(req, res) {
+    JDBC.selectList(DB.userInfoModel, {type: req.body.type})
       .then(_res => {
         if (_res) {
           res.json(RES.responseSucceesData(_res));

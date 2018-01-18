@@ -46,7 +46,11 @@ class UserInfo extends Component {
   }
 
   submit() {
-    let params = {...this.state,userid:this.props.userinfo._id};
+    let params = {...this.state,
+      username:this.props.userinfo.username,
+      type:this.props.userinfo.type,
+      userid:this.props.userinfo._id
+    };
     this.props.workAction(params);
   }
 
@@ -54,10 +58,10 @@ class UserInfo extends Component {
     return (
       <div>
         {this.props.workinfo.routerTo ? <Redirect to={'/me'}></Redirect>:''}
-        <NavBar mode='dark'>{this.props.userinfo.type == 'boos' ? 'boos完善资料页' : '牛人完善资料页'}</NavBar>
+        <NavBar mode='dark'>{this.props.userinfo.type == 'boss' ? 'boss完善资料页' : '牛人完善资料页'}</NavBar>
         <Avatar onChangeInput={this.onChangeInput} avatar = {this.state.avatar}></Avatar>
         <WhiteSpace></WhiteSpace>
-        {this.props.userinfo.type == 'boos' ? <BoosInfo onChangeInput={this.onChangeInput} {...this.state}/> : <GeniusInfo onChangeInput={this.onChangeInput} {...this.state}/>}
+        {this.props.userinfo.type == 'boss' ? <BoosInfo onChangeInput={this.onChangeInput} {...this.state}/> : <GeniusInfo onChangeInput={this.onChangeInput} {...this.state}/>}
         <WhiteSpace></WhiteSpace>
         <Button type="primary" onClick={this.submit}>保存</Button>
       </div>

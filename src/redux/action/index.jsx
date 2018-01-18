@@ -10,8 +10,10 @@ async function userAxios (dispatch,type, url, data) {
   if(result.succeed){
     if(LOGIN == url){
       let r = await axios.post(FINDINFOMATION, {userid:result.data._id});
-      let {_id,...v} = r.data;
-      avatar = v;
+      if(r.succeed){
+        let {_id,...v} = r.data;
+        avatar = v;
+      }
     }
     if(SAVEINFOMATION == url){
        avatar = true;

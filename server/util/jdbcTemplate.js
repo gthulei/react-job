@@ -53,6 +53,19 @@ class JdbcTemplate {
       })
     })
   }
+
+  selectList(model, ...parameter) {
+    return this.promise((resolve, reject) => {
+      model.find(...parameter, _filter, (error, doc) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(doc);
+        }
+      })
+    })
+  }
+
 }
 
 module.exports = new JdbcTemplate();

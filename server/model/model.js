@@ -10,7 +10,9 @@ const user = new mongoose.Schema({
 });
 
 const userInfo = new mongoose.Schema({
+  username: {type: String, required: true},
   userid: {type: String, required: true},
+  type: {type: String, required: true},
   position: {type: String, required: true},
   avatar: {type: String},
   company: {type: String},

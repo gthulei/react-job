@@ -15,4 +15,6 @@ router.post('/seveInforMation', isAuthenticated, controller.seveInforMation);
 
 router.post('/findInforMation', isAuthenticated, controller.findInforMation);
 
+router.post('/findUserList', controller.findUserList);
+
 module.exports = router;
