@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {NavBar, WhiteSpace, Button } from 'antd-mobile';
 import {withRouter , Redirect} from 'react-router-dom';
+import PureRenderMixin from "react-addons-pure-render-mixin";
 import {connect} from 'react-redux';
 
 import {FINDINFOMATION, SAVEINFOMATION} from 'api/user.api'
@@ -24,6 +25,7 @@ class UserInfo extends Component {
       decs:'',
       avatar:''
     }
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.submit = this.submit.bind(this);
     this.onChangeInput = this.onChangeInput.bind(this);
   }

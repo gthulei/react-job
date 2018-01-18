@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {WingBlank, WhiteSpace, InputItem, Button} from 'antd-mobile';
 import {withRouter, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux';
+import PureRenderMixin from "react-addons-pure-render-mixin";
 
 import Logo from "components/Logo";
 import {loginAction} from 'reduxs/action'
@@ -22,6 +23,7 @@ class Login extends Component {
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onGoback = this.onGoback.bind(this);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
   onChangeInput(key, val) {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter, Redirect, Switch, Route} from 'react-router-dom';
+import PureRenderMixin from "react-addons-pure-render-mixin";
 import {connect} from 'react-redux';
 import {NavBar} from 'antd-mobile';
 
@@ -18,6 +19,7 @@ import './index.css';
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
   render() {

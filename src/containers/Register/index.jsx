@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {WingBlank, WhiteSpace, InputItem, Button, Radio} from 'antd-mobile';
+import PureRenderMixin from "react-addons-pure-render-mixin";
 import {withRouter ,Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 
@@ -26,7 +27,7 @@ class Register extends Component {
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onGoback = this.onGoback.bind(this);
-
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
   onChangeInput(key, val) {
