@@ -9,6 +9,8 @@ router.post('/register', controller.register);
 
 router.post('/userInfo', controller.userInfo);
 
+router.post('/escLogin', controller.escLogin);
+
 router.post('/seveInforMation', isAuthenticated, controller.seveInforMation);
 
 router.post('/findInforMation', isAuthenticated, controller.findInforMation);

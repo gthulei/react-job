@@ -9,7 +9,9 @@ async function userAxios (dispatch,type, url, data) {
   let avatar = false;
   if(result.succeed){
     if(LOGIN == url){
-      avatar = await axios.post(FINDINFOMATION, {userid:result.data._id});
+      let r = await axios.post(FINDINFOMATION, {userid:result.data._id});
+      let {_id,...v} = r.data;
+      avatar = v;
     }
     if(SAVEINFOMATION == url){
        avatar = true;
@@ -47,4 +49,11 @@ export function workAction(data) {
     userAxios(dispatch, actionTypes.WORK_INFO,SAVEINFOMATION, data);
   }
 
+}
+
+export function clearUserinfAction(data) {
+  return {
+    type: actionTypes.AUTO_LOGIN,
+    data
+  }
 }

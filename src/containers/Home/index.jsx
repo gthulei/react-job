@@ -13,7 +13,7 @@ import './index.css';
 
 @withRouter
 @connect(
-  state => state.workinfo
+  state => state.userinfo
 )
 class Home extends Component {
   constructor(props) {
@@ -21,24 +21,27 @@ class Home extends Component {
   }
 
   render() {
+    const  { type ,location} = this.props;
     const navList = [
-      {path: '/list', text: 'boss', icon: 'job', title: 'boss列表', component: List},
+      {path: '/list', text: type == 'boss' ? '牛人' : 'boss', icon: 'job', title: type == 'boss' ? '牛人列表' : 'boss列表', component: List},
       {path: '/msg', text: '消息', icon: 'msg', title: '消息列表', component: Msg},
       {path: '/me', text: '我', icon: 'user', title: '个人中心', component: Me}
     ]
     return (
       <div>
-        <NavBar mode='dark'>home</NavBar>
+        <NavBar mode='dark'>
+          {navList.find(v => v.path === location.pathname).title}
+        </NavBar>
         <section className={'tabBar-link'}>
           <TabBarLink navList={navList}></TabBarLink>
-          <Switch>
-            {
-              navList.map(v => (
-                <Route key={v.path} path={v.path} component={v.component}></Route>
-              ))
-            }
-          </Switch>
         </section>
+        <Switch>
+          {
+            navList.map(v => (
+              <Route key={v.path} path={v.path} component={v.component}></Route>
+            ))
+          }
+        </Switch>
       </div>
     );
   }

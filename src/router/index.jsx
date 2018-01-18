@@ -16,7 +16,7 @@ const Router = () => {
           <Route path='/login' component={Login}></Route>
           <Route path='/register' component={Register}></Route>
           <Route path='/userInfo' component={UserInfo}></Route>
-          <Route path='/home' component={Home}></Route>
+          <Route component={Home}></Route>
         </Switch>
       </div>
     </BrowserRouter>

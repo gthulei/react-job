@@ -53,7 +53,7 @@ class UserInfo extends Component {
   render() {
     return (
       <div>
-        {this.props.workinfo.avatar ? <Redirect to={this.props.workinfo.routerTo}></Redirect>:''}
+        {this.props.workinfo.routerTo ? <Redirect to={'/me'}></Redirect>:''}
         <NavBar mode='dark'>{this.props.userinfo.type == 'boos' ? 'boos完善资料页' : '牛人完善资料页'}</NavBar>
         <Avatar onChangeInput={this.onChangeInput} avatar = {this.state.avatar}></Avatar>
         <WhiteSpace></WhiteSpace>

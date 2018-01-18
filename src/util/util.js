@@ -1,5 +1,4 @@
 export const getRedicectPath = (avatar) => {
-  console.log(avatar)
-  let url = avatar  ? '/home' : '/userInfo'
+  let url = avatar  ? '/me' : '/userInfo'
   return url;
 }

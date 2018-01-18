@@ -23,7 +23,6 @@ class AuthRouter extends Component {
     axios.post(USERINFO)
       .then(_res => {
         if (_res.succeed) {
-          console.log("1")
           this.props.userInfoAction(_res.data);
         }else {
           this.props.history.push('/login');

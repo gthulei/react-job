@@ -6,12 +6,10 @@ import {withRouter} from 'react-router-dom'
 class TabBarLink extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedTab: 'me'
-    }
   }
 
   render() {
+    const { pathname } = this.props.location;
     return (
       <TabBar>
         {this.props.navList.map(item => {
@@ -20,7 +18,7 @@ class TabBarLink extends Component {
             selectedIcon={{uri:require(`./img/${item.icon}-active.png`)}}
             key={item.path}
             title={item.text}
-            selected={this.state.selectedTab === 'msg'}
+            selected={item.path === pathname}
             onPress={() => this.props.history.push(item.path)}
           />
         })}
